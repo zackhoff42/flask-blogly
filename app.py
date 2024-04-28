@@ -80,3 +80,10 @@ def show_user(user_id):
     """Show user profile page."""
     user = User.query.get_or_404(user_id)
     return render_template("details.html", user=user)
+
+
+@app.route("/users/<int:user_id>/posts/new")
+def show_post_form(user_id):
+    """Show user post form."""
+    user = User.query.get_or_404(user_id)
+    return render_template("post.html", user=user)
