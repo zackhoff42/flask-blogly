@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from app import app
-from models import db, User
+from models import db, User, Post
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///blogly_test"
 app.config["SQLALCHEMY_ECHO"] = False
@@ -33,7 +33,7 @@ class UserViewsTestCase(TestCase):
 
     def test_list_users(self):
         with app.test_client() as client:
-            resp = client.get("/")
+            resp = client.get("/users")
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 200)

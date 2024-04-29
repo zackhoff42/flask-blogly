@@ -1,3 +1,18 @@
-body {
-    background-color: blue;
+table {
+    margin: 2vh;
+}
+
+td {
+    padding: 1vh;
+    width: 8vw;
+}
+
+input, textarea {
+    width: 30vw;
+}
+
+.post-buttons {
+    position: relative;
+    width: 10vw;
+    left: 30vw;
 }

@@ -1,7 +1,7 @@
 """Blogly application."""
 
 from flask import Flask, request, render_template, redirect, flash, session
-from models import db, connect_db, User
+from models import db, connect_db, User, Post
 
 app = Flask(__name__)
 
@@ -87,3 +87,60 @@ def show_post_form(user_id):
     """Show user post form."""
     user = User.query.get_or_404(user_id)
     return render_template("post.html", user=user)
+
+
+@app.route("/users/<int:user_id>/posts/new", methods=["POST"])
+def post_story(user_id):
+    """Posts user story to the database."""
+    user = User.query.get_or_404(user_id)
+    title = request.form["title"]
+    content = request.form["content"]
+
+    new_post = Post(user_id=user.id, title=title, content=content)
+
+    db.session.add(new_post)
+    db.session.commit()
+
+    return redirect(f"/posts/{new_post.id}")
+
+
+@app.route("/posts/<int:post_id>")
+def show_story(post_id):
+    """Shows user post."""
+    post = Post.query.get_or_404(post_id)
+    user = User.query.get_or_404(post.user_id)
+
+    return render_template("post_details.html", post=post, user=user)
+
+
+@app.route("/posts/<int:post_id>/delete", methods=["POST"])
+def delete_story(post_id):
+    """Deletes user story from the database."""
+    post = Post.query.get_or_404(post_id)
+    user = User.query.get_or_404(post.user_id)
+    db.session.delete(post)
+    db.session.commit()
+
+    return redirect(f"/users/{user.id}")
+
+
+@app.route("/posts/<int:post_id>/edit")
+def show_edit_post(post_id):
+    """Shows user the form to edit a previous post."""
+    post = Post.query.get_or_404(post_id)
+    user = User.query.get_or_404(post.user_id)
+
+    return render_template("edit_post.html", post=post, user=user)
+
+
+@app.route("/posts/<int:post_id>/edit", methods=["POST"])
+def edit_post(post_id):
+    """Allows user to edit the post in the database."""
+    post = Post.query.get_or_404(post_id)
+    post.title = request.form["title"]
+    post.content = request.form["content"]
+
+    db.session.add(post)
+    db.session.commit()
+
+    return redirect(f"/posts/{post.id}")

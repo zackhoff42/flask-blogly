@@ -11,6 +11,11 @@ def connect_db(app):
     db.init_app(app)
 
 
+dt = datetime.now()
+
+truncated_datetime = f"{dt.year}-{dt.month}-{dt.day} {dt.hour}:{dt.minute}:{dt.second}"
+
+
 class User(db.Model):
     """User."""
 
@@ -35,10 +40,12 @@ class Post(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
-    title = db.Column(db.Text, nullable=False, unique=True)
+    title = db.Column(db.String, nullable=False, unique=True)
 
-    content = db.Column(db.Text)
+    content = db.Column(db.String)
 
-    created_at = db.Column(db.DateTime, default=datetime.now)
+    created_at = db.Column(db.DateTime, default=truncated_datetime)
 
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+
+    user = db.relationship("User", backref="posts")

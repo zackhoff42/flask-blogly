@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}{{user.first_name}} {{user.last_name}}'s Post{% endblock %}
+
+{% block content %}
+
+    <h1>{{post.title}}</h1>
+
+    <p>{{post.content}}</p>
+
+    <footer class="font-italic">By <a href="/users/{{user.id}}">{{user.first_name}} {{user.last_name}}</a>, Created at {{post.created_at}}</footer>
+
+    <form>
+        <button formaction="/users/{{user.id}}">Cancel</button>
+        <button formaction="/posts/{{post.id}}/edit">Edit</button>
+        <button formaction="/posts/{{post.id}}/delete" method="POST">Delete</button>
+    </form>
+
+{% endblock %}
