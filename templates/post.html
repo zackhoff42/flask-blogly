@@ -18,6 +18,12 @@
         </tr>
     </table>
 
+    <ul class="post-tags">
+    {% for tag in tags %}
+        <li><input type="checkbox" name="tags" value="{{tag.id}}">{{tag.name}}</li>
+    {% endfor %}
+    </ul>
+
     <div class="post-buttons">
         <button formaction="/users/{{user.id}}" class="btn btn-danger">Cancel</button>
         <button formaction="/users/{{user.id}}/posts/new" formmethod="POST" class="btn btn-success">Add</button>

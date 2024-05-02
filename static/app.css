@@ -7,7 +7,7 @@ td {
     width: 8vw;
 }
 
-input, textarea {
+td input, textarea {
     width: 30vw;
 }
 
@@ -15,4 +15,8 @@ input, textarea {
     position: relative;
     width: 10vw;
     left: 30vw;
+}
+
+.post-tags {
+    list-style-type: none;
 }

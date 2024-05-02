@@ -14,9 +14,19 @@
             </tr>
             <tr>
                 <td><label for="content">Content</label></td>
-                <td><textarea type="text" name="content" placeholder="{{post.content}}" rows="5"></textarea></td>
+                <td><textarea type="text" name="content" rows="5">{{post.content}}</textarea></td>
             </tr>
         </table>
+
+        <ul class="post-tags">
+            {% for tag in tags %}
+                {% if tag in post.tags %}
+                    <li><input type="checkbox" name="tags" value="{{tag.id}}" checked>{{tag.name}}</li>
+                {% else %}
+                    <li><input type="checkbox" name="tags" value="{{tag.id}}">{{tag.name}}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
     
         <div class="post-buttons">
             <button formaction="/users/{{user.id}}" class="btn btn-danger">Cancel</button>
